@@ -1,10 +1,10 @@
+import { OpenAI } from 'openai';
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import WorkflowCanvas from './components/WorkflowCanvas';
 import AssistantPage from './components/assistant/AssistantPage';
 import Sidebar from './components/Sidebar';
 import Navbar from './components/Navbar'; 
-import axios from 'axios';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
@@ -17,7 +17,7 @@ const App = () => {
         const newNode = {
             id: Date.now(),
             type,
-            x: position.x,  // Set the position based on the drop location
+            x: position.x,  
             y: position.y,
         };
         setNodes((prevNodes) => [...prevNodes, newNode]);
@@ -43,30 +43,33 @@ const App = () => {
         setSettings(settingsData);
     };
 
+    // Refactor to use OpenAI library instead of axios
     const runLLMEngine = async (inputText) => {
-        if (!settings || !settings.apiKey) {
-            alert("API Key is missing!");
-            return;
-        }
-
-        try {
-            const response = await axios.post(settings.apiBase, {
-                model: settings.model,
-                messages: [{ role: "user", content: inputText }],
-                max_tokens: settings.maxTokens,
-                temperature: settings.temperature,
-            }, {
-                headers: {
-                    'Authorization': `Bearer ${settings.apiKey}`,
-                    'Content-Type': 'application/json',
-                },
-            });
-
-            setOutput(response.data.choices[0].message.content);
-        } catch (error) {
-            console.error("Error during API call:", error);
-            setOutput("Error occurred while fetching response.");
-        }
+      if (!settings || !settings.apiKey) {
+        alert("API Key is missing!");
+        return;
+      }
+    
+      try {
+        
+        const openai = new OpenAI({
+          apiKey: settings.apiKey,  
+          dangerouslyAllowBrowser: true
+        });
+    
+       
+        const response = await openai.chat.completions.create({
+          model: settings.model,
+          messages: [{ role: "user", content: inputText }],
+          max_tokens: settings.maxTokens,
+          temperature: settings.temperature,
+        });
+    
+        setOutput(response.choices[0].message.content);
+      } catch (error) {
+        console.error("Error during API call:", error);
+        setOutput("Error occurred while fetching response.");
+      }
     };
 
     const saveSettings = () => {

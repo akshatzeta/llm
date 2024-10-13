@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Select from 'react-select';
 
 const models = [
-  { value: 'gpt-3.5', label: 'gpt-3.5' },
+  { value: 'gpt-3.5-turbo', label: 'gpt-3.5-turbo' },  
   { value: 'gpt-4', label: 'gpt-4' }
 ];
 
@@ -11,7 +11,6 @@ const LLMEngineNode = ({ onSettingsSubmit }) => {
   const [apiKey, setApiKey] = useState('');
   const [maxTokens, setMaxTokens] = useState(2000);
   const [temperature, setTemperature] = useState(0.5);
-  const [apiBase, setApiBase] = useState('https://api.openai.com/v1/chat/completions');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,7 +19,6 @@ const LLMEngineNode = ({ onSettingsSubmit }) => {
       apiKey,
       maxTokens,
       temperature,
-      apiBase,
     });
   };
 
@@ -34,13 +32,6 @@ const LLMEngineNode = ({ onSettingsSubmit }) => {
           value={model}
           onChange={(selectedModel) => setModel(selectedModel)}
           className="mt-2 mb-4"
-        />
-        <label>OpenAI API Base:</label>
-        <input 
-          type="text"
-          value={apiBase}
-          onChange={(e) => setApiBase(e.target.value)}
-          className="w-full p-2 border rounded mt-2 mb-4"
         />
         <label>OpenAI Key:</label>
         <input 

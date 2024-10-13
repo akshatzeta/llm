@@ -9,9 +9,9 @@ const DraggableSidebarButton = ({ type, label, color, addNewNode }) => {
 
   return (
     <button
-      ref={drag}  // Enables dragging
+      ref={drag} 
       className={`w-full bg-${color}-500 hover:bg-${color}-600 text-white px-3 py-2 mb-2 rounded transition duration-200`}
-      onClick={() => addNewNode(type)} // Allows clicking to add the node
+      onClick={() => addNewNode(type)} 
     >
       {label}
     </button>
