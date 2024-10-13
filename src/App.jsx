@@ -1,23 +1,34 @@
-// src/App.jsx
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import WorkflowCanvas from './components/WorkflowCanvas';
 import AssistantPage from './components/assistant/AssistantPage';
 import Sidebar from './components/Sidebar';
 import Navbar from './components/Navbar'; 
 import axios from 'axios';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 const App = () => {
     const [nodes, setNodes] = useState([]); 
     const [output, setOutput] = useState('');
     const [settings, setSettings] = useState(null);
 
-    const addNewNode = (type) => {
+    const addNewNode = (type, position = { x: 100, y: 100 }) => {
         const newNode = {
             id: Date.now(),
             type,
+            x: position.x,  // Set the position based on the drop location
+            y: position.y,
         };
         setNodes((prevNodes) => [...prevNodes, newNode]);
+    };
+
+    const moveNode = (id, newPosition) => {
+        setNodes((prevNodes) => 
+            prevNodes.map((node) =>
+                node.id === id ? { ...node, x: newPosition.x, y: newPosition.y } : node
+            )
+        );
     };
 
     const handleInputSubmit = (inputText) => {
@@ -67,39 +78,40 @@ const App = () => {
     };
 
     return (
-        <Router>
-            <div className="flex flex-col h-screen bg-gray-200">
-                {/* Only show Navbar and Sidebar when not on the Assistant page */}
-                <Routes>
-                    <Route 
-                        path="/" 
-                        element={
-                            <>
-                                <Navbar 
-                                    onSaveSettings={saveSettings} 
-                                    onInputSubmit={handleInputSubmit} 
-                                /> 
-                                <div className="flex flex-1 p-3">
-                                    <Sidebar addNewNode={addNewNode} />
-                                    <WorkflowCanvas 
-                                        nodes={nodes} 
+        <DndProvider backend={HTML5Backend}>
+            <Router>
+                <div className="flex flex-col h-screen bg-gray-200">
+                    <Routes>
+                        <Route 
+                            path="/" 
+                            element={
+                                <>
+                                    <Navbar 
+                                        onSaveSettings={saveSettings} 
                                         onInputSubmit={handleInputSubmit} 
-                                        onSettingsSubmit={handleSettingsSubmit} 
-                                        output={output}
-                                    />
-                                </div>
-                            </>
-                        } 
-                    />
-                    <Route path="/assistant" element={<AssistantPage />} />
-                </Routes>
-                <div className="fixed bottom-5 right-5">
-                    <Link to="/assistant" className="bg-blue-500 text-white rounded-full p-3 shadow-lg">
-                        🤖
-                    </Link>
+                                    /> 
+                                    <div className="flex flex-1 p-3">
+                                        <Sidebar addNewNode={addNewNode} />
+                                        <WorkflowCanvas 
+                                            nodes={nodes} 
+                                            onInputSubmit={handleInputSubmit} 
+                                            onSettingsSubmit={handleSettingsSubmit} 
+                                            output={output}
+                                            moveNode={moveNode}
+                                            addNewNode={addNewNode} // Pass the new function
+                                        />
+                                    </div>
+                                </>
+                            } 
+                        />
+                        <Route path="/assistant" element={<AssistantPage />} />
+                    </Routes>
+                    <div className="flex justify-center p-4 bg-gray-300">
+                        <p>Copyright © 2024 YourApp</p>
+                    </div>
                 </div>
-            </div>
-        </Router>
+            </Router>
+        </DndProvider>
     );
 };
 
