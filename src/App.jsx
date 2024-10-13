@@ -43,7 +43,6 @@ const App = () => {
         setSettings(settingsData);
     };
 
-    // Refactor to use OpenAI library instead of axios
     const runLLMEngine = async (inputText) => {
       if (!settings || !settings.apiKey) {
         alert("API Key is missing!");
@@ -83,7 +82,7 @@ const App = () => {
     return (
         <DndProvider backend={HTML5Backend}>
             <Router>
-                <div className="flex flex-col h-screen bg-gray-200">
+                <div className="flex flex-col  bg-gray-200">
                     <Routes>
                         <Route 
                             path="/" 
@@ -101,7 +100,7 @@ const App = () => {
                                             onSettingsSubmit={handleSettingsSubmit} 
                                             output={output}
                                             moveNode={moveNode}
-                                            addNewNode={addNewNode} // Pass the new function
+                                            addNewNode={addNewNode} 
                                         />
                                     </div>
                                 </>
@@ -109,9 +108,6 @@ const App = () => {
                         />
                         <Route path="/assistant" element={<AssistantPage />} />
                     </Routes>
-                    <div className="flex justify-center p-4 bg-gray-300">
-                        <p>Copyright © 2024 YourApp</p>
-                    </div>
                 </div>
             </Router>
         </DndProvider>

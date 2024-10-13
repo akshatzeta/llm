@@ -12,7 +12,7 @@ const Navbar = ({ onSaveSettings, onSendToLLM }) => {
                 >
                     Run
                 </button>
-
+                
                 <button 
                     onClick={onSaveSettings} 
                     className="ml-2 bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-400"
