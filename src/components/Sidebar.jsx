@@ -14,7 +14,7 @@ const DraggableSidebarButton = ({ type, label, bgColorClass, addNewNode, Icon })
       className={`${bgColorClass} hover:opacity-80 text-white px-3 py-2 mb-2 rounded transition duration-200 flex items-center`}
       onClick={() => addNewNode(type)}
     >
-      {/* Add the icon and text with proper alignment */}
+      
       <Icon className="mr-2" /> {/* Logo */}
       {label} {/* Text */}
     </button>

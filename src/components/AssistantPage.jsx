@@ -1,8 +1,11 @@
 import React from 'react';
-import Sidebar from './Sidebar';
-import Header from './Header';
-import MainContent from './MainContent';
-import InputSection from './InputSection';
+import Sidebar from './assistant/Sidebar';
+import Header from './assistant/Header';
+import MainContent from './assistant/MainContent';
+import InputSection from './assistant/InputSection';
+
+
+
 
 const AssistantPage = () => {
   return (

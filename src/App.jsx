@@ -1,8 +1,8 @@
 import { OpenAI } from 'openai';
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import WorkflowCanvas from './components/WorkflowCanvas';
-import AssistantPage from './components/assistant/AssistantPage';
+import AssistantPage from './components/AssistantPage';
 import Sidebar from './components/Sidebar';
 import Navbar from './components/Navbar'; 
 import { DndProvider } from 'react-dnd';
@@ -50,13 +50,11 @@ const App = () => {
       }
     
       try {
-        
         const openai = new OpenAI({
           apiKey: settings.apiKey,  
           dangerouslyAllowBrowser: true
         });
     
-       
         const response = await openai.chat.completions.create({
           model: settings.model,
           messages: [{ role: "user", content: inputText }],
@@ -82,7 +80,7 @@ const App = () => {
     return (
         <DndProvider backend={HTML5Backend}>
             <Router>
-                <div className="flex flex-col  bg-gray-200">
+                <div className="flex flex-col bg-gray-200">
                     <Routes>
                         <Route 
                             path="/" 
@@ -108,6 +106,11 @@ const App = () => {
                         />
                         <Route path="/assistant" element={<AssistantPage />} />
                     </Routes>
+                    <div className="fixed bottom-5 right-5">
+                        <Link to="/assistant" className="bg-blue-500 text-white rounded-full p-3 shadow-lg">
+                            🤖
+                        </Link>
+                    </div>     
                 </div>
             </Router>
         </DndProvider>
