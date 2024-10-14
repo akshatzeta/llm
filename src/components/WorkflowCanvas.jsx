@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDrop } from 'react-dnd';
-import Xarrow from 'react-xarrows'; // Import Xarrow
+import Xarrow from 'react-xarrows'; 
 import InputNode from './InputNode';
 import LLMEngineNode from './LLMEngineNode';
 import OutputNode from './OutputNode';
@@ -53,9 +53,9 @@ const WorkflowCanvas = ({ nodes, onInputSubmit, onSettingsSubmit, output, moveNo
                         ) : null;
                     })}
 
-                    {/* Add dynamic lines between the nodes */}
+                   
                     {nodes.map((node, index) => {
-                        // Example of connecting nodes in sequence (you can adjust based on your logic)
+                        
                         const nextNode = nodes[index + 1];
                         if (nextNode) {
                             return (

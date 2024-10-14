@@ -2,16 +2,16 @@ import React, { useState } from 'react';
 
 const InputNode = ({ onInputSubmit }) => {
   const [input, setInput] = useState('');
-  const [showPopup, setShowPopup] = useState(false); // State to manage popup visibility
+  const [showPopup, setShowPopup] = useState(false); 
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (input.trim() === '') {
-      setShowPopup(true); // Show popup if input is empty
+      setShowPopup(true); 
     } else {
       onInputSubmit(input);
-      setInput(''); // Clear input after submission
-      setShowPopup(false); // Hide popup after submission
+      setInput(''); 
+      setShowPopup(false); 
     }
   };
 
@@ -19,7 +19,7 @@ const InputNode = ({ onInputSubmit }) => {
     <div className="border rounded p-4 shadow-md bg-white">
       <h3 className="text-lg font-semibold">INPUT</h3>
       <form onSubmit={handleSubmit}>
-        {/* Popup message for empty input */}
+       
         {showPopup && (
           <div className="mb-2 text-red-600 bg-red-100 border border-red-200 rounded-lg p-2">
             Please enter a question!
