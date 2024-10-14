@@ -7,19 +7,19 @@ import DraggableNode from './DraggableNode';
 
 const WorkflowCanvas = ({ nodes, onInputSubmit, onSettingsSubmit, output, moveNode, addNewNode }) => {
     const [, drop] = useDrop(() => ({
-        accept: ["node", "sidebarNode"], // Accept both node movement and sidebar node drag
+        accept: ["node", "sidebarNode"], 
         drop: (item, monitor) => {
             const delta = monitor.getClientOffset();
             
             if (item.type) {
-                // This is from Sidebar
+                
                 const canvasPosition = {
                     x: delta.x,
                     y: delta.y,
                 };
-                addNewNode(item.type, canvasPosition); // Add new node from Sidebar drag
+                addNewNode(item.type, canvasPosition); 
             } else {
-                // This is a normal node drag and drop
+                
                 const delta = monitor.getDifferenceFromInitialOffset();
                 const newPosition = {
                     x: item.x + delta.x,

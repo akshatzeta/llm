@@ -2,7 +2,7 @@ import { OpenAI } from 'openai';
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import WorkflowCanvas from './components/WorkflowCanvas';
-import AssistantPage from './components/AssistantPage';
+import AssistantPage from './components/assistant/AssistantPage';
 import Sidebar from './components/Sidebar';
 import Navbar from './components/Navbar'; 
 import { DndProvider } from 'react-dnd';
