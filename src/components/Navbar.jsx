@@ -1,4 +1,5 @@
 import React from 'react';
+import { PlayIcon } from '@heroicons/react/24/solid'; // Import the PlayIcon from Heroicons
 
 const Navbar = ({ onSaveSettings, onSendToLLM }) => {
     return (
@@ -8,9 +9,10 @@ const Navbar = ({ onSaveSettings, onSendToLLM }) => {
             <div className="flex items-center">
                 <button 
                     onClick={onSendToLLM} 
-                    className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+                    className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 flex items-center space-x-2"
                 >
-                    Run
+                    <PlayIcon className="h-5 w-5 text-white" />  {/* Play icon */}
+                    <span>Run</span>
                 </button>
                 
                 <button 
